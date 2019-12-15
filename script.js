@@ -18,37 +18,27 @@ function displayResults(responseJson, maxResults) {
   let maxList = responseJson.data.length;
   if(maxList > maxResults) maxList = maxResults;
   //console.log(maxList);
-   for (let i = 0; i < maxList; i++){ //for (let i = 0; i < responseJson.data.length; i++){  //for (let i = 0; i < responseJson.items.length; i++){
-    // for each park object in the items
-    //array, add a list item to the results
-    //list with the park title, description,
-    //and thumbnail
-    $('#results-list').append(
-      `<div class="park-name">
-      <h3 class="panel-title">${responseJson.data[i].fullName}</h3>
-    </div>
-    <div class="park-description">
-     <h4 class="panel-title">${responseJson.data[i].description}</h4>
-     <p> <p>
-     </div>
-     <div class= "url">
-     <a href=" ${responseJson.data[i].url}">Park Website</a>
-     </div>
-    </div>
-  </div>`);
+   for (let i = 0; i < maxList; i++){
+    $('#zomato-results-list').append(
+      `<div class="restaurant-name">
+        <h3 class="restaurantsJs">${responseJson.data[i].fullName}</h3>
+      </div>
+      <div class= "url">
+        <a href=" ${responseJson.data[i].url}">Restaurants</a>
+       </div>`);
   }
   //display the results section
   $('#results').removeClass('hidden');
 };
 
 
-  function getRestaurants(query, maxResults) {
+  function getRestaurants(query, maxResults=10) {
   const params = {
-    user-key: apiKey,
+    "user-key": apiKey,
     q: query,
     count: 10
   };
-  const queryString = formatQueryParams(params)
+  const queryString = formatQueryParams(params);
   const url = searchURL + '?' + queryString;
 
   fetch(url)
@@ -63,3 +53,15 @@ function displayResults(responseJson, maxResults) {
       $('#js-error-message').text(`Something went wrong: ${err.message}`);
     });
 }
+
+function watchForm() {
+  $('#js-form').submit(event => {
+    event.preventDefault();
+    console.log('Button clicked');
+    const searchTerm = $('#location-search').val();
+    const maxResults = 10; 
+    getRestaurants(searchTerm, maxResults); 
+  });
+}
+
+$(watchForm);
