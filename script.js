@@ -34,14 +34,18 @@ function displayResults(responseJson, maxResults) {
 
   function getRestaurants(query, maxResults=10) {
   const params = {
-    "user-key": apiKey,
     q: query,
     count: 10
   };
   const queryString = formatQueryParams(params);
   const url = searchURL + '?' + queryString;
 
-  fetch(url)
+  const options = {
+    headers: new Headers({
+      "user-key": apiKey})
+  };
+
+  fetch(url, options)
     .then(response => {
       if (response.ok) {
         return response.json();
