@@ -21,14 +21,14 @@ function displayResults(responseJson, maxResults) {
    for (let i = 0; i < maxList; i++){
     $('#zomato-results-list').append(
       `<div class="restaurant-name">
-        <h3 class="restaurantsJs">${responseJson.data[i].name}</h3>
+        <h3 class="restaurantsJs">Restaurants${responseJson.data[i].name}</h3>
       </div>
       <div class= "url">
-        <a href=" ${responseJson.data[i].state_code}">Restaurants</a>
+        <a href=" ${responseJson.data[i].state_code}"></a>
        </div>`);
   }
   //display the results section
-  $('#results').removeClass('hidden');
+  $('#zomato-results').removeClass('hidden');
 };
 
 
@@ -65,6 +65,7 @@ function watchForm() {
     const searchTerm = $('#location-search').val();
     const maxResults = 10; 
     getRestaurants(searchTerm, maxResults); 
+    
   });
 }
 
